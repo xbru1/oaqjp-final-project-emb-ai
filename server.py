@@ -14,6 +14,9 @@ def sent_detector():
 
     response = emotion_detector(text_to_analyze)
 
+    if (response['dominant_emotion'] == 'none'):
+        return "Invalid Text! Please Try Again"
+
     toReturn = f'''
     For the given statement, the system response is
     \n'anger': {response['anger']}

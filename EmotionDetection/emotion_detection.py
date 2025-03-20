@@ -7,6 +7,14 @@ def emotion_detector(text_to_analyse):
 	obj = { "raw_document": { "text": text_to_analyse } }
 	response = requests.post(url, json = obj, headers=header)
 	formatted = json.loads(response.text)
+	print(response.status_code)
+
+    # Instructions say to check only for code 400, but instead we check for any code that isn't 200 to ensure that it can handle other error types
+	if (response.status_code != 200):
+        # For some reason I have put his into a value before returning it
+		toReturn = {'anger': 'none', 'disgust': 'none', 'fear': 'none', 'joy': 'none', 'sadness': 'none', 'dominant_emotion': 'none'}
+		return toReturn
+	
 	emotions = formatted['emotionPredictions'][0]['emotion']
 
 	# Loop through the emotions and get the one with the highest value, then reassign it to the object
