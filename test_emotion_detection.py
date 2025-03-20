@@ -1,19 +1,16 @@
 from EmotionDetection.emotion_detection import emotion_detector
+import unittest
 
-# Tests are defined in this array so that more can be easily added
-tests = [ ['I am glad this happened', 'joy'], ['I am really mad about this', 'anger'], ['I feel disgusted just hearing about this', 'disgust'], ['I am so sad about this', 'sadness'], ['I am really afraid that this will happen', 'fear'] ]
-# Number of tests failed
-failed = 0
+class TestEmotionDetector(unittest.TestCase):
 
-# Loop through the tests
-for i in tests:
-    result = emotion_detector(i[0])
-    if (result['dominant_emotion'] != i[1]):
-        print(f"Test failed for string '{i[0]}', expected result '{i[1]}' but received '{result['dominant_emotion']}'")
-        failed += 1
+    # Test the emotion detector
+    def test_emotion_detector(self):
+        # Tests are defined with this array to make adding more easier
+        tests = [ ['I am glad this happened', 'joy'], ['I am really mad about this', 'anger'], ['I feel disgusted', 'disgust'], ['I am so sad about this', 'sadness'], ['I am really afraid that this will happen', 'fear'] ]
 
-# Print whether or not all tests passed and how many failed if not
-if (failed == 0):
-    print("All tests succeeded")
-else:
-    print(f"{failed} tests failed")
+		# Loop through the tests
+        for i in tests:
+            result = emotion_detector(i[0])
+            self.assertEqual(result['dominant_emotion'], i[1])
+
+unittest.main()
